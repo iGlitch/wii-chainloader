@@ -15,7 +15,7 @@ include $(DEVKITPPC)/wii_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	hackless
+TARGET		:=	boot
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data  
@@ -32,13 +32,13 @@ CXXFLAGS	=	$(CFLAGS)
 # move loader to another location - THANKS CREDIAR - 0x81330000 for HBC
 #---------------------------------------------------------------------------------
 #LDFLAGS = -g $(MACHDEP) -Wl,-Map,$(notdir $@).map -Wl,--section-start,.init=0x81000000
-LDFLAGS	= -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
+LDFLAGS	= $(MACHDEP) -Wl,-Map,$(notdir $@).map -Wl,-s
 #LDFLAGS = -g $(MACHDEP) -Wl,-Map,$(notdir $@).map -Wl,--section-start,.init=0x80003f00
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lfat -lntfs -lz -lbte -logc -lm -lwiiuse -lbte 
+LIBS	:=	-lfat -lz -lbte -logc -lm -lwiiuse -lbte 
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -106,11 +106,12 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@mv $(OUTPUT).elf hackless.elf
 
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol
+	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol hackless.elf
 
 #---------------------------------------------------------------------------------
 run:

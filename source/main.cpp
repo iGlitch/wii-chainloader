@@ -224,7 +224,7 @@ static bool has_alpha(const char *s, size_t n)
 
 static bool getModName(char *out, size_t outsz)
 {
-        const char *dirpath = "sd:/private/wii/app/rsbe/st";
+        const char *dirpath = "sd:/private/wii/app/rsbe";
         DIR *d = opendir(dirpath);
         if (!d) return false;
 
@@ -253,7 +253,7 @@ static bool getModName(char *out, size_t outsz)
 static void DeInitDevices()
 {
         SDCard_deInit();
-        USBDevice_deInit();
+//        USBDevice_deInit();
         ISFS_Deinitialize();
 }
 
@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
         SDCard_Init();
         char appName[256] = {0};
         if (getModName(appName, sizeof(appName))) {
-                snprintf(full_path, ISFS_MAXPATH, "sd:/apps/%.40s/boot.dol", appName);
+                snprintf(full_path, ISFS_MAXPATH, "sd:/apps/%.40s/boot.elf", appName);
         }
 
         FILE *exeFile = fopen(full_path, "rb");

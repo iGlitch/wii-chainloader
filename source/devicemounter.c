@@ -1,13 +1,13 @@
 ﻿#include <gccore.h>
 #include <ogc/mutex.h>
 #include <ogc/system.h>
-#include <ogc/usbstorage.h>
+//#include <ogc/usbstorage.h>
 #include <ogc/lwp_watchdog.h>
 #include <malloc.h>
 #include <string.h>
 #include <stdio.h>
 #include <fat.h>
-#include <ntfs.h>
+//#include <ntfs.h>
 #include <sdcard/wiisd_io.h>
 #include <unistd.h>
 #include <time.h>
@@ -38,7 +38,7 @@ typedef struct _MASTER_BOOT_RECORD {
 #define PARTITION_TYPE_LINUX    0x83
 #define le32(i) (((((u32) i) & 0xFF) << 24) | ((((u32) i) & 0xFF00) << 8) | \
 				((((u32) i) & 0xFF0000) >> 8) | ((((u32) i) & 0xFF000000) >> 24))
-
+/*
 int USBDevice_Init()
 {
 	time_t start = time(0);
@@ -71,8 +71,8 @@ int USBDevice_Init()
 		//! Partition typ can be missleading the correct partition format. Stupid lazy ass Partition Editors.
 		if(memcmp(BootSector + 0x36, "FAT", 3) == 0 || memcmp(BootSector + 0x52, "FAT", 3) == 0)
 			fatMount(DeviceName[USB1+i], &__io_usbstorage, le32(mbr->partitions[i].lba_start), CACHE, SECTORS);
-		else if (memcmp(BootSector + 0x03, "NTFS", 4) == 0)
-			ntfsMount(DeviceName[USB1+i], &__io_usbstorage, le32(mbr->partitions[i].lba_start), CACHE, SECTORS, NTFS_SHOW_HIDDEN_FILES | NTFS_RECOVER | NTFS_IGNORE_CASE);
+//		else if (memcmp(BootSector + 0x03, "NTFS", 4) == 0)
+//			ntfsMount(DeviceName[USB1+i], &__io_usbstorage, le32(mbr->partitions[i].lba_start), CACHE, SECTORS, NTFS_SHOW_HIDDEN_FILES | NTFS_RECOVER | NTFS_IGNORE_CASE);
 	}
     }
 	free(mbr);
@@ -90,13 +90,13 @@ void USBDevice_deInit()
 	{
 		sprintf(Name, "%s:/", DeviceName[dev]);
 		fatUnmount(Name);
-		ntfsUnmount(Name, true);
+//		ntfsUnmount(Name, true);
 	}
 	//Let's not shutdown so it stays awake for the application
 	__io_usbstorage.shutdown();
 	USB_Deinitialize();
 }
-
+*/
 int SDCard_Init()
 {
 	if(!__io_wiisd.startup() || !__io_wiisd.isInserted())
